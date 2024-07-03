@@ -55,3 +55,19 @@ Setup Instructions:
    A. Open by running: open -a Simulator
    B. In Metro Bundler terminal, run: i
    iii. Only have one simulator open at a time.
+
+6. Gifted Chat
+   a. In project directory terminal, run: npm install react-native-gifted-chat --save
+
+Github:
+To create new repo:
+
+1. From project directory in terminal run: git init
+2. Run git commit -m "first commit"
+3. Run git branch -M main
+4. From GH page, go through process of adding new repo, then use https it gives and run: git remote add origin https://github.com/leanneduyck/chat.git
+5. git push -u origin main
+   To push:
+6. Run: git add .
+7. Run: git commit -m "Your commit message"
+8. Run: git push

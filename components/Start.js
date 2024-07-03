@@ -3,10 +3,11 @@ import {
   StyleSheet,
   View,
   Text,
-  Button,
   TextInput,
   ImageBackground,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
 // Start component
@@ -43,26 +44,50 @@ const Start = ({ navigation }) => {
               style={[
                 styles.colorInput,
                 { backgroundColor: '#090C08' },
+                // conditional styling for selected color
                 color === '#090C08' ? styles.selectedColor : null,
               ]}
+              // accessibility
+              accessible={true}
+              accessibilityLabel="black color"
+              accessibilityHint="choose black color as background color for chat screen"
+              accessibilityRole="button"
+              // onPress event to set color state variable
               onPress={() => setColor('#090C08')}
             />
             <TouchableOpacity
               style={[styles.colorInput, { backgroundColor: '#474056' }]}
+              accessible={true}
+              accessibilityLabel="dark gray color"
+              accessibilityHint="choose dark gray color as background color for chat screen"
+              accessibilityRole="button"
               onPress={() => setColor('#474056')}
             />
             <TouchableOpacity
               style={[styles.colorInput, { backgroundColor: '#8A95A5' }]}
+              accessible={true}
+              accessibilityLabel="light gray color"
+              accessibilityHint="choose light gray color as background color for chat screen"
+              accessibilityRole="button"
               onPress={() => setColor('#8A95A5')}
             />
             <TouchableOpacity
               style={[styles.colorInput, { backgroundColor: '#B9C6AE' }]}
+              accessible={true}
+              accessibilityLabel="light green color"
+              accessibilityHint="choose light green color as background color for chat screen"
+              accessibilityRole="button"
               onPress={() => setColor('#B9C6AE')}
             />
           </View>
           {/* button leading to chat screen */}
           <TouchableOpacity
             style={styles.button}
+            // accessibility
+            accessible={true}
+            accessibilityLabel="start chatting"
+            accessibilityHint="press the button to enter chat screen"
+            accessibilityRole="button"
             // navigate to ChatScreen and pass the name state variable as a parameter
             onPress={() =>
               navigation.navigate('Chat', { name: name, color: color })
@@ -72,6 +97,10 @@ const Start = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
+      {/* fixes keyboard being too large */}
+      {Platform.OS === 'ios' ? (
+        <KeyboardAvoidingView behavior="padding" />
+      ) : null}
     </ImageBackground>
   );
 };
