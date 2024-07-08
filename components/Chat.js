@@ -1,47 +1,49 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import {
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  addDoc,
+} from 'firebase/firestore';
 
 // Chat component
-const Chat = ({ route, navigation }) => {
+const Chat = ({ route, navigation, db }) => {
   // gets the name parameter from the route object
-  const { name, color } = route.params;
+  const { name, color, userID } = route.params;
   // useState hook to create a state variable called messages
   const [messages, setMessages] = useState([]);
 
-  // sets header as name the user entered
   useEffect(() => {
+    // sets the title of the chat screen to the user's name
     navigation.setOptions({ title: name });
-  }, [navigation, name]);
-
-  // sets initial messages, includes a system message
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'You have begun chatting in Chat App!',
-        createdAt: new Date(),
-        system: true,
-      },
-      {
-        _id: 2,
-        text: 'Hello, developer!',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
-  }, []);
+    // query to get messages from firestore, orders them by createdAt, in descending order
+    const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
+    // onSnapshot listener to get messages from firestore
+    const unsubMessages = onSnapshot(q, (docs) => {
+      let newMessages = [];
+      // loops through the documents and adds them to the newMessages array
+      docs.forEach((doc) => {
+        newMessages.push({
+          _id: doc.id,
+          ...doc.data(),
+          createdAt: new Date(doc.data().createdAt.toMillis()),
+        });
+      });
+      setMessages(newMessages);
+    });
+    // unsubscribes from the listener when the component unmounts
+    return () => unsubMessages();
+  }, [db, name, navigation]);
 
   const onSend = (newMessages) => {
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, newMessages)
-    );
+    // adds the new message to the messages collection in firestore
+    addDoc(collection(db, 'messages'), newMessages[0]);
   };
 
+  // renders the chat bubbles
   const renderBubble = (props) => {
     return (
       <Bubble
@@ -64,9 +66,10 @@ const Chat = ({ route, navigation }) => {
       <GiftedChat
         messages={messages}
         renderBubble={renderBubble}
-        onSend={(messages) => onSend(messages)}
+        onSend={onSend}
         user={{
-          _id: 1,
+          _id: userID,
+          name: name,
         }}
       />
       {/* fixes keyboard being too large */}

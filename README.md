@@ -59,6 +59,18 @@ Setup Instructions:
 6. Gifted Chat
    a. In project directory terminal, run: npm install react-native-gifted-chat --save
 
+7. Firestore (via Firebase)
+   a. Create a new project in Google Firebase
+   i. disable Google Analytics
+   ii. Build - Firestore Database
+   iii. Start in Production Mode
+   iv. Rules tab: change "allow read, write: if false;" to "allow read, write: if true;"
+   v. Enable the anonymous sign-in method (Build - Authentication - Get Started - SignInMethod - Anonymous)
+   vi. No need to actually create a collection
+   b. Install Firestore by running: npm install firebase@10.3.1 --save
+   c. Configure Firestore database to Chat
+   i. Project Settings - "</>" (Firestore for Web) - Register 11. Copy the const firebaseConifg... into App.js
+
 Github:
 To create new repo:
 

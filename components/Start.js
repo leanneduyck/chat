@@ -8,13 +8,33 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
+import { getAuth, signInAnonymously } from 'firebase/auth';
 
 // Start component
 const Start = ({ navigation }) => {
-  // useState hook to create a state variable called name and color
+  // useState hook to create state variables for name and color
   const [name, setName] = useState('');
   const [color, setColor] = useState('');
+  // initializes firebase authentication
+  const auth = getAuth();
+  // signs in user anonymously, navigates to ChatScreen, and displays alert
+  const signInUser = () => {
+    signInAnonymously(auth)
+      .then((result) => {
+        // passes userID, name, and color to ChatScreen
+        navigation.navigate('Chat', {
+          userID: result.user.uid,
+          name: name,
+          color: color,
+        });
+        Alert.alert('you are signed in');
+      })
+      .catch((error) => {
+        Alert.alert('uh oh, please try again later...');
+      });
+  };
 
   return (
     <ImageBackground
@@ -88,10 +108,8 @@ const Start = ({ navigation }) => {
             accessibilityLabel="start chatting"
             accessibilityHint="press the button to enter chat screen"
             accessibilityRole="button"
-            // navigate to ChatScreen and pass the name state variable as a parameter
-            onPress={() =>
-              navigation.navigate('Chat', { name: name, color: color })
-            }
+            // navigate to ChatScreen and pass the name/color variables, as well as userID
+            onPress={signInUser}
           >
             <Text style={styles.buttonTitle}>start chatting...</Text>
           </TouchableOpacity>
