@@ -1,20 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect } from 'react';
+import { StyleSheet, Text, View, LogBox, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Start from './components/Start';
 import Chat from './components/Chat';
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import {
+  getFirestore,
+  disableNetwork,
+  enableNetwork,
+} from 'firebase/firestore';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 // creates a stack navigator
 const Stack = createNativeStackNavigator();
 
 // prevents warning message from showing
-import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['AsyncStorage has been extracted from']);
 
 const App = () => {
+  // gets network information
+  const connectionStatus = useNetInfo();
+  // checks if internet connection; disables/enables firestore network accordingly
+  useEffect(() => {
+    if (connectionStatus.isConnected === false) {
+      Alert.alert('you are offline...');
+      disableNetwork(db);
+    } else if (connectionStatus.isConnected === true) {
+      enableNetwork(db);
+    }
+  }, [connectionStatus.isConnected]);
   // configures firebase
   const firebaseConfig = {
     apiKey: 'AIzaSyDx0uDGBSrjkc5flpyU-KNyV-cEBA2azKk',
@@ -35,8 +51,18 @@ const App = () => {
       <Stack.Navigator initialRouteName="Start">
         <Stack.Screen name="Start" component={Start} />
         <Stack.Screen name="Chat">
-          {/* passes database prop to Chat */}
+          {/*} code from 5.3, trying below
+          {/* passes database prop to Chat *
           {(props) => <Chat {...props} db={db} />}
+          */}
+          {/* passes database prop to Chat, checks internet connection */}
+          {(props) => (
+            <Chat
+              isConnected={connectionStatus.isConnected}
+              {...props}
+              db={db}
+            />
+          )}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

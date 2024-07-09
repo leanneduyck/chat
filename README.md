@@ -61,7 +61,7 @@ Setup Instructions:
 
 7. Firestore (via Firebase)
    a. Create a new project in Google Firebase
-   i. disable Google Analytics
+   i. Disable Google Analytics
    ii. Build - Firestore Database
    iii. Start in Production Mode
    iv. Rules tab: change "allow read, write: if false;" to "allow read, write: if true;"
@@ -71,6 +71,15 @@ Setup Instructions:
    c. Configure Firestore database to Chat
    i. Project Settings - "</>" (Firestore for Web) - Register 11. Copy the const firebaseConifg... into App.js
 
+8. Local Storage (via React AsyncStorage)
+   a. Run: expo install @react-native-async-storage/async-storage
+
+9. Detect Network Connection (via NetInfo)
+   a. Run: expo install @react-native-community/netinfo
+
+10. Testing in Offline Mode via Emulator
+    a. Run: expo start --offline
+
 Github:
 To create new repo:
 
@@ -79,7 +88,9 @@ To create new repo:
 3. Run git branch -M main
 4. From GH page, go through process of adding new repo, then use https it gives and run: git remote add origin https://github.com/leanneduyck/chat.git
 5. git push -u origin main
-   To push:
+
+To push:
+
 6. Run: git add .
 7. Run: git commit -m "Your commit message"
 8. Run: git push
