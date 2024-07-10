@@ -12,6 +12,7 @@ import {
   enableNetwork,
 } from 'firebase/firestore';
 import { useNetInfo } from '@react-native-community/netinfo';
+import { FIREBASE_CONFIG } from '@env';
 
 // creates a stack navigator
 const Stack = createNativeStackNavigator();
@@ -31,17 +32,8 @@ const App = () => {
       enableNetwork(db);
     }
   }, [connectionStatus.isConnected]);
-  // configures firebase
-  const firebaseConfig = {
-    apiKey: 'AIzaSyDx0uDGBSrjkc5flpyU-KNyV-cEBA2azKk',
-    authDomain: 'chatapp-74d33.firebaseapp.com',
-    projectId: 'chatapp-74d33',
-    storageBucket: 'chatapp-74d33.appspot.com',
-    messagingSenderId: '62702612519',
-    appId: '1:62702612519:web:4e377d28b2637118391e02',
-  };
-  // initializes firebase
-  const app = initializeApp(firebaseConfig);
+  // initializes firebase from .env config file
+  const app = initializeApp(JSON.parse(FIREBASE_CONFIG));
   // gets firestore instance
   const db = getFirestore(app);
 
@@ -51,10 +43,6 @@ const App = () => {
       <Stack.Navigator initialRouteName="Start">
         <Stack.Screen name="Start" component={Start} />
         <Stack.Screen name="Chat">
-          {/*} code from 5.3, trying below
-          {/* passes database prop to Chat *
-          {(props) => <Chat {...props} db={db} />}
-          */}
           {/* passes database prop to Chat, checks internet connection */}
           {(props) => (
             <Chat

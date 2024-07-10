@@ -1,3 +1,25 @@
+Overview:
+This is a React Native chat app that allows users to enter their name and choose a background color for the chat screen before joining. It provides a platform for users to exchange messages, send images, and share location data. The app ensures that data is accessible both online and offline by leveraging Firebase Firestore for data storage and React AsyncStorage for local caching. The app is designed to be user-friendly and accessible, including compatibility with screen readers.
+
+Key Features: 1. A page where users can enter their name and choose a background color for the chat screen before joining the chat. 2. A page displaying the conversation, as well as an input field and submit button. 3. The chat must provide users with two additional communication features: sending images and location data. 4. Data gets stored online and offline.
+
+Data Source:
+
+Website:
+
+User Stories: 1. As a new user, I want to be able to easily enter a chat room so I can quickly start talking to my friends and family. 2. As a user, I want to be able to send messages to my friends and family members to exchange the latest news. 3. As a user, I want to send images to my friends to show them what I'm currently doing. 4. As a user, I want to share my location with my friends and family to show them where I am. 5. As a user, I want to be able to read my messages offline so I can reread conversations at any time. 6. As a user with visual impairment, I want to use a chat app taht is compatible with a screen reader so that I can engage with a chat interface.
+
+Technologies Used:
+
+1. React Native: For building the mobile application.
+2. Expo: For development, build, and deployment processes.
+3. React Navigation: For managing navigation between screens.
+4. Firebase: For backend services including Firestore for data storage and Firebase Authentication for user authentication.
+5. React Native Gifted Chat: For providing a chat interface.
+6. React AsyncStorage: For local storage of chat data.
+7. @react-native-community/netinfo: For detecting network connection status.
+8. dotenv: For managing environment variables securely.
+
 Setup Instructions:
 
 1. Prepare Node.js
@@ -70,6 +92,7 @@ Setup Instructions:
    b. Install Firestore by running: npm install firebase@10.3.1 --save
    c. Configure Firestore database to Chat
    i. Project Settings - "</>" (Firestore for Web) - Register 11. Copy the const firebaseConifg... into App.js
+   d. Make sure to add firebase config code into .env file
 
 8. Local Storage (via React AsyncStorage)
    a. Run: expo install @react-native-async-storage/async-storage

@@ -42,10 +42,6 @@ const Chat = ({ route, navigation, db, isConnected }) => {
       });
     } else loadCachedMessages();
     // cleans up the listener
-    // code from 5.3, trying below
-    //   return () => unsubMessages();
-    // }, [db, name, navigation]);
-    // cleans up listener, avoids new listeners when connection changes
     return () => {
       if (unsubMessages) unsubMessages();
       unsubMessages = null;
