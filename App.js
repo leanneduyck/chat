@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import { StyleSheet, Text, View, LogBox, Alert } from 'react-native';
+import { StyleSheet, LogBox, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Start from './components/Start';
@@ -11,6 +10,7 @@ import {
   disableNetwork,
   enableNetwork,
 } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { FIREBASE_CONFIG } from '@env';
 
@@ -23,6 +23,12 @@ LogBox.ignoreLogs(['AsyncStorage has been extracted from']);
 const App = () => {
   // gets network information
   const connectionStatus = useNetInfo();
+  // initializes firebase from .env config file
+  const app = initializeApp(JSON.parse(FIREBASE_CONFIG));
+  // gets firestore instance
+  const db = getFirestore(app);
+  // gets storage instance
+  const storage = getStorage(app);
   // checks if internet connection; disables/enables firestore network accordingly
   useEffect(() => {
     if (connectionStatus.isConnected === false) {
@@ -32,10 +38,6 @@ const App = () => {
       enableNetwork(db);
     }
   }, [connectionStatus.isConnected]);
-  // initializes firebase from .env config file
-  const app = initializeApp(JSON.parse(FIREBASE_CONFIG));
-  // gets firestore instance
-  const db = getFirestore(app);
 
   return (
     // wraps the stack navigator with the NavigationContainer, navigates between screens
@@ -47,8 +49,9 @@ const App = () => {
           {(props) => (
             <Chat
               isConnected={connectionStatus.isConnected}
-              {...props}
               db={db}
+              storage={storage}
+              {...props}
             />
           )}
         </Stack.Screen>

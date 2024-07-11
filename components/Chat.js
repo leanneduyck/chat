@@ -9,6 +9,9 @@ import {
   addDoc,
 } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getStorage } from 'firebase/storage';
+import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
 
 // Chat component
 const Chat = ({ route, navigation, db, isConnected }) => {
@@ -16,6 +19,8 @@ const Chat = ({ route, navigation, db, isConnected }) => {
   const { name, color, userID } = route.params;
   // useState hook to create a state variable called messages
   const [messages, setMessages] = useState([]);
+  // gets storage instance
+  const storage = getStorage();
 
   // calling outside useEffect so can unsubscribe/cleanup before lose reference to it
   let unsubMessages;
@@ -91,21 +96,48 @@ const Chat = ({ route, navigation, db, isConnected }) => {
 
   // lets inPutToolbar be disabled when user offline
   const renderInputToolbar = (props) => {
-    if (isConnected) {
+    if (isConnected === true) {
       return <InputToolbar {...props} />;
     } else {
       return null;
     }
   };
 
+  // functions for customActions for image/camera/location buttons in chat
+  const renderCustomActions = (props) => {
+    return <CustomActions onSend={onSend} storage={storage} {...props} />;
+  };
+
+  // function to render customView for location
+  const renderCustomView = (props) => {
+    const { currentMessage } = props;
+    if (currentMessage.location) {
+      return (
+        <MapView
+          style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
+          region={{
+            latitude: currentMessage.location.latitude,
+            longitude: currentMessage.location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+        />
+      );
+    }
+    return null;
+  };
+
   // renders chat component
   return (
     <View style={[styles.container, { backgroundColor: color }]}>
+      {/* GiftedChat component */}
       <GiftedChat
         messages={messages}
         renderBubble={renderBubble}
         renderInputToolbar={renderInputToolbar}
-        onSend={onSend}
+        onSend={(messages) => onSend(messages)}
+        renderActions={renderCustomActions}
+        renderCustomView={renderCustomView}
         user={{
           _id: userID,
           name: name,

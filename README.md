@@ -1,13 +1,24 @@
 Overview:
 This is a React Native chat app that allows users to enter their name and choose a background color for the chat screen before joining. It provides a platform for users to exchange messages, send images, and share location data. The app ensures that data is accessible both online and offline by leveraging Firebase Firestore for data storage and React AsyncStorage for local caching. The app is designed to be user-friendly and accessible, including compatibility with screen readers.
+The UI of this app was completely specified by the provided wireframe.
 
-Key Features: 1. A page where users can enter their name and choose a background color for the chat screen before joining the chat. 2. A page displaying the conversation, as well as an input field and submit button. 3. The chat must provide users with two additional communication features: sending images and location data. 4. Data gets stored online and offline.
+Key Features:
 
-Data Source:
+1. A page where users can enter their name and choose a background color for the chat screen before joining the chat.
+2. A page displaying the conversation, as well as an input field and submit button.
+3. The chat must provide users with two additional communication features: sending images and location data.
+4. Data gets stored online and offline.
 
 Website:
 
-User Stories: 1. As a new user, I want to be able to easily enter a chat room so I can quickly start talking to my friends and family. 2. As a user, I want to be able to send messages to my friends and family members to exchange the latest news. 3. As a user, I want to send images to my friends to show them what I'm currently doing. 4. As a user, I want to share my location with my friends and family to show them where I am. 5. As a user, I want to be able to read my messages offline so I can reread conversations at any time. 6. As a user with visual impairment, I want to use a chat app taht is compatible with a screen reader so that I can engage with a chat interface.
+User Stories:
+
+1. As a new user, I want to be able to easily enter a chat room so I can quickly start talking to my friends and family.
+2. As a user, I want to be able to send messages to my friends and family members to exchange the latest news.
+3. As a user, I want to send images to my friends to show them what I'm currently doing.
+4. As a user, I want to share my location with my friends and family to show them where I am.
+5. As a user, I want to be able to read my messages offline so I can reread conversations at any time.
+6. As a user with visual impairment, I want to use a chat app taht is compatible with a screen reader so that I can engage with a chat interface.
 
 Technologies Used:
 
@@ -19,6 +30,12 @@ Technologies Used:
 6. React AsyncStorage: For local storage of chat data.
 7. @react-native-community/netinfo: For detecting network connection status.
 8. dotenv: For managing environment variables securely.
+9. Expo Image Picker: For selecting images from the device library or capturing new images using the device camera.
+10. Expo Location: For accessing device location data.
+11. Firebase Storage: For storing and retrieving image files.
+12. React Native Maps: For rendering maps and displaying user locations.
+13. Expo Media Library: For managing and interacting with the device's media library.
+14. Babel: For transforming and compiling modern JavaScript syntax.
 
 Setup Instructions:
 
@@ -93,15 +110,28 @@ Setup Instructions:
    c. Configure Firestore database to Chat
    i. Project Settings - "</>" (Firestore for Web) - Register 11. Copy the const firebaseConifg... into App.js
    d. Make sure to add firebase config code into .env file
+   e. Set up storage (Build - Storage - Get Started - Next - Done)
+   i. Rules tab: change "allow read, write: if false;" to "allow read, write: if true;" - Publish
 
 8. Local Storage (via React AsyncStorage)
    a. Run: expo install @react-native-async-storage/async-storage
+   b. Then code accordingly
 
 9. Detect Network Connection (via NetInfo)
    a. Run: expo install @react-native-community/netinfo
+   b. Then code accordingly
 
 10. Testing in Offline Mode via Emulator
     a. Run: expo start --offline
+
+11. Media Library
+    a. Run: expo install expo-image-picker
+    b. To be able to save images taken in app, run: expo install expo-media-library
+    c. Then code accordingly
+
+12. Geolocation
+    a. Run: expo install expo-location
+    b. Run: expo install react-native-maps
 
 Github:
 To create new repo:
