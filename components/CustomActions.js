@@ -15,7 +15,7 @@ const CustomActions = ({
   const actionSheet = useActionSheet();
   const onActionPress = () => {
     const options = [
-      'Picture From Library',
+      'Photo From Library',
       'Take Picture',
       'Send Location',
       'Cancel',
@@ -45,25 +45,28 @@ const CustomActions = ({
 
     // handles images from firebase storage
     const uploadAndSendImage = async (imageURI) => {
-      // generates a unique reference string for the image
-      const uniqueRefString = generateReference(imageURI);
       // creates a reference to the image in firebase storage
-      const newUploadRef = ref(storage, uniqueRefString);
+      const newUploadRef = ref(storage, 'images/' + userID + '/' + Date.now());
       const response = await fetch(imageURI);
       // gets the image as a blob
       const blob = await response.blob();
       // uploads the image to firebase storage
-      uploadBytes(newUploadRef, blob).then(async (snapshot) => {
-        // gets the download URL of the image, and sends
-        const imageURL = await getDownloadURL(snapshot.ref);
-        onSend({
-          image: imageURL,
-          user: {
-            _id: userID,
-            name: 'User',
-          },
+      uploadBytes(newUploadRef, blob)
+        .then(async (snapshot) => {
+          // gets the download URL of the image, and sends
+          const imageURL = await getDownloadURL(snapshot.ref);
+          onSend({
+            image: imageURL,
+            user: {
+              _id: userID,
+              name: 'User',
+            },
+          });
+        })
+        .catch((error) => {
+          console.error('Error uploading image:', error);
+          Alert.alert('Error uploading image. Please try again.');
         });
-      });
     };
 
     // handles pickImage
