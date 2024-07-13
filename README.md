@@ -9,7 +9,7 @@ Key Features:
 3. The chat must provide users with two additional communication features: sending images and location data.
 4. Data gets stored online and offline.
 
-Website:
+Website: N/A, published on Expo but not submitted to any App Store
 
 User Stories:
 
@@ -147,7 +147,8 @@ Setup Instructions:
     a. Run: npm install -g eas-cli
     b. Run: eas login
     c. Run: eas update:configure
-    d. To publish, run: eas update
+    d. To build, run: eas build --platform all
+    e. To update, run: eas update
 
 Github:
 To create new repo:
