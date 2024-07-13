@@ -133,6 +133,16 @@ Setup Instructions:
     a. Run: expo install expo-location
     b. Run: expo install react-native-maps
 
+13. Clearing Cache
+    a. To delete .expo directory, run: rm -rf .expo
+    b. To clear npm cache, run: npm cache clean --force
+    c. To clear Metro bundler cache, run: expo start -c
+    d. To delete node_modules, run: rm -rf node_modules
+    i. Then, reinstall: npm install
+
+14. Expo Publish
+    a. Run: expo publish
+
 Github:
 To create new repo:
 

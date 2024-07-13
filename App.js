@@ -19,6 +19,8 @@ const Stack = createNativeStackNavigator();
 
 // prevents warning message from showing
 LogBox.ignoreLogs(['AsyncStorage has been extracted from']);
+LogBox.ignoreLogs(['Avatar: Support ']);
+LogBox.ignoreLogs(['@firebase/auth: ']);
 
 const App = () => {
   // gets network information

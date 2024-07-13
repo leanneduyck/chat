@@ -2,6 +2,7 @@ import { TouchableOpacity, Text, View, StyleSheet, Alert } from 'react-native';
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
+import * as MediaLibrary from 'expo-media-library';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const CustomActions = ({
@@ -14,6 +15,7 @@ const CustomActions = ({
   // space-saving action sheet menu to choose from custom actions
   const actionSheet = useActionSheet();
   const onActionPress = () => {
+    // options for the action sheet
     const options = [
       'Photo From Library',
       'Take Picture',
@@ -21,7 +23,6 @@ const CustomActions = ({
       'Cancel',
     ];
     const cancelButtonIndex = options.length - 1;
-    // shows the action sheet with the options
     actionSheet.showActionSheetWithOptions(
       {
         options,
@@ -42,74 +43,73 @@ const CustomActions = ({
         }
       }
     );
+  };
 
-    // handles images from firebase storage
-    const uploadAndSendImage = async (imageURI) => {
-      // creates a reference to the image in firebase storage
-      const newUploadRef = ref(storage, 'images/' + userID + '/' + Date.now());
-      const response = await fetch(imageURI);
-      // gets the image as a blob
-      const blob = await response.blob();
-      // uploads the image to firebase storage
-      uploadBytes(newUploadRef, blob)
-        .then(async (snapshot) => {
-          // gets the download URL of the image, and sends
-          const imageURL = await getDownloadURL(snapshot.ref);
-          onSend({
-            image: imageURL,
-            user: {
-              _id: userID,
-              name: 'User',
-            },
-          });
-        })
-        .catch((error) => {
-          console.error('Error uploading image:', error);
-          Alert.alert('Error uploading image. Please try again.');
+  // handles images from firebase storage
+  const uploadAndSendImage = async (imageURI) => {
+    const newUploadRef = ref(storage, 'images/' + userID + '/' + Date.now());
+    const response = await fetch(imageURI);
+    // gets the image as a blob
+    const blob = await response.blob();
+    uploadBytes(newUploadRef, blob)
+      // uploads the image to firebase storage, gets the download URL, and sends
+      .then(async (snapshot) => {
+        const imageURL = await getDownloadURL(snapshot.ref);
+        onSend({
+          image: imageURL,
+          user: {
+            _id: userID,
+            name: 'User',
+          },
         });
-    };
+      })
+      .catch((error) => {
+        console.error('Error uploading image:', error);
+        Alert.alert('Error uploading image. Please try again.');
+      });
+  };
 
-    // handles pickImage
-    const pickImage = async () => {
-      let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (permissions?.granted) {
-        // launches the image library
-        let result = await ImagePicker.launchImageLibraryAsync();
-        // sends image, unless cancelled/no permissions
-        if (!result.canceled) await uploadAndSendImage(result.assets[0].uri);
-        else Alert.alert("Permissions haven't been granted.");
-      }
-    };
+  // handles pickImage
+  const pickImage = async () => {
+    let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissions?.granted) {
+      // launches the image library and sends image, unless cancelled/no permissions
+      let result = await ImagePicker.launchImageLibraryAsync();
+      if (!result.canceled) {
+        await MediaLibrary.createAssetAsync(result.assets[0].uri);
+        await uploadAndSendImage(result.assets[0].uri);
+      } else Alert.alert("Permissions haven't been granted.");
+    }
+  };
 
-    // handles takePhoto
-    const takePhoto = async () => {
-      let permissions = await ImagePicker.requestCameraPermissionsAsync();
-      if (permissions?.granted) {
-        // launches the camera
-        let result = await ImagePicker.launchCameraAsync();
-        // sends image, unless cancelled/no permissions
-        if (!result.canceled) await uploadAndSendImage(result.assets[0].uri);
-        else Alert.alert("Permissions haven't been granted.");
-      }
-    };
+  // handles takePhoto
+  const takePhoto = async () => {
+    let permissions = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissions?.granted) {
+      // launches the camera and sends image, unless cancelled/no permissions
+      let result = await ImagePicker.launchCameraAsync();
+      if (!result.canceled) {
+        await MediaLibrary.createAssetAsync(result.assets[0].uri);
+        await uploadAndSendImage(result.assets[0].uri);
+      } else Alert.alert("Permissions haven't been granted.");
+    }
+  };
 
-    // handles getLocation
-    const getLocation = async () => {
-      let permissions = await Location.requestForegroundPermissionsAsync();
-      if (permissions?.granted) {
-        // gets the current location if permissions granted
-        const location = await Location.getCurrentPositionAsync({});
-        if (location) {
-          // sends the location
-          onSend({
-            location: {
-              longitude: location.coords.longitude,
-              latitude: location.coords.latitude,
-            },
-          });
-        } else Alert.alert('you need to enable location services...');
-      } else Alert.alert("you haven't granted permissions...");
-    };
+  // handles getLocation
+  const getLocation = async () => {
+    let permissions = await Location.requestForegroundPermissionsAsync();
+    if (permissions?.granted) {
+      // gets the current location if permissions granted
+      const location = await Location.getCurrentPositionAsync({});
+      if (location) {
+        onSend({
+          location: {
+            longitude: location.coords.longitude,
+            latitude: location.coords.latitude,
+          },
+        });
+      } else Alert.alert('You need to enable location services...');
+    } else Alert.alert("You haven't granted permissions...");
   };
 
   // renders customActions component
