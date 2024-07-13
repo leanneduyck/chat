@@ -143,6 +143,12 @@ Setup Instructions:
 14. Expo Publish
     a. Run: expo publish
 
+15. EAS Publishing if Expo CLI deprecated
+    a. Run: npm install -g eas-cli
+    b. Run: eas login
+    c. Run: eas update:configure
+    d. To publish, run: eas update
+
 Github:
 To create new repo:
 
