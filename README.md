@@ -9,7 +9,7 @@ Key Features:
 3. The chat must provide users with two additional communication features: sending images and location data.
 4. Data gets stored online and offline.
 
-Website: N/A, published on Expo but not submitted to any App Store
+Expo Link: https://expo.dev/preview/update?message=readme&updateRuntimeVersion=1.0.0&createdAt=2024-07-14T00%3A52%3A16.822Z&slug=exp&projectId=06dc17ba-4509-4950-90c4-203dcae4ee64&group=a0360ea5-cb19-48a2-9c71-07b2523ac535
 
 User Stories:
 
