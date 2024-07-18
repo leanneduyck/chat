@@ -1,5 +1,5 @@
 Overview:
-Current GH Repo Overview: This is a React Native mobile app that allows users to enter their name and choose a background color for the chat screen before joining. It provides a platform for users to exchange messages (React Native Gifted Chat), send images (Expo Media Library), and share location data (React Native Maps). It features a user-friendly interface designed according to wireframes. The app ensures seamless offline and online data access using Firebase Firestore for real-time storage and React AsyncStorage for local caching. Expo is used for development and testing in Android and iOS. 
+Current GH Repo Overview: This is a React Native mobile app that allows users to enter their name and choose a background color for the chat screen before joining. It provides a platform for users to exchange messages (React Native Gifted Chat), send images (Expo Media Library), and share location data (React Native Maps). It features a user-friendly interface designed according to wireframes. The app ensures seamless offline and online data access using Firebase Firestore for real-time storage and React AsyncStorage for local caching. ExpoGo is used for development and testing in Android and iOS. 
 
 Key Features:
 
