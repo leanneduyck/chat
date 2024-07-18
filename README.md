@@ -1,6 +1,5 @@
 Overview:
-This is a React Native chat app that allows users to enter their name and choose a background color for the chat screen before joining. It provides a platform for users to exchange messages, send images, and share location data. The app ensures that data is accessible both online and offline by leveraging Firebase Firestore for data storage and React AsyncStorage for local caching. The app is designed to be user-friendly and accessible, including compatibility with screen readers.
-The UI of this app was completely specified by the provided wireframe.
+Current GH Repo Overview: This is a React Native mobile app that allows users to enter their name and choose a background color for the chat screen before joining. It provides a platform for users to exchange messages (React Native Gifted Chat), send images (Expo Media Library), and share location data (React Native Maps). It features a user-friendly interface designed according to wireframes. The app ensures seamless offline and online data access using Firebase Firestore for real-time storage and React AsyncStorage for local caching. Expo is used for development and testing in Android and iOS. 
 
 Key Features:
 
