@@ -38,116 +38,116 @@ Technologies Used:
 
 Setup Instructions:
 
-1. Prepare Node.js
-   a. Install Node by running: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
-   b. Load ‘nvm’ by running: export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+Prepare Node.js
+   1. Install Node by running: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+   2. Load ‘nvm’ by running: export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-   c. Verify installation by running: nvm –version
-   d. Install compatible version for use with Expo by running:
-   i. nvm install 16.19.0
-   ii. nvm use 16.19.0
-   iii. nvm alias default 16.19.0
+   3. Verify installation by running: nvm –version
+   4. Install compatible version for use with Expo by running:
+   5. nvm install 16.19.0
+   6. nvm use 16.19.0
+   7. nvm alias default 16.19.0
 
-2. Prepare Expo
-   a. Install Expo CLI by running: npm install -g expo-cli
-   b. Download “Expo Go App” on smartphone
-   c. Create online Expo account
-   d. To use Expo CLI, login via the terminal by running: expo login
-   i. To check current login, run: expo whoami
+Prepare Expo
+   1. Install Expo CLI by running: npm install -g expo-cli
+   2. Download “Expo Go App” on smartphone
+   3. Create online Expo account
+   4. To use Expo CLI, login via the terminal by running: expo login
+   5. To check current login, run: expo whoami
 
-3. Create Project
-   a. In terminal, navigate to folder of dev projects and run: npx create-expo-app {title of project} –-template
-   i. Choose blank template when prompted
-   b. After initialization complete, navigate to project by running: cd {title of project}
-   c. Start Metro Bundler by running: npm start (or expo start)
-   i. Connect with Expo Go App either via terminal or via phone
-   ii. Metro Bundler automatically updates Expo Go App as save files in VSC
+Create Project
+   1. In terminal, navigate to folder of dev projects and run: npx create-expo-app {title of project} –-template
+   2. Choose blank template when prompted
+   3. After initialization complete, navigate to project by running: cd {title of project}
+   4. Start Metro Bundler by running: npm start (or expo start)
+   5. Connect with Expo Go App either via terminal or via phone
+   6. Metro Bundler automatically updates Expo Go App as save files in VSC
 
-4. Install React-Navigation
-   a. Install by running: npm install --save @react-navigation/native @react-navigation/native-stack
-   b. Install necessary dependencies by running: expo install react-native-screens react-native-safe-area-context
+Install React-Navigation
+   1. Install by running: npm install --save @react-navigation/native @react-navigation/native-stack
+   2. Install necessary dependencies by running: expo install react-native-screens react-native-safe-area-context
 
-5. Android Studio (emulator)
-   a. Download and install Android Studio
-   i. If using Mac, move to Apps folder
-   b. Set up Android Emulator
-   i. Follow install instructions EXCEPT "Select Components to Install:" select "Android Virtual Device"
-   c. Configure Android Studio
-   i. Project Option - More Actions - select "SDK Manager"
-   A. Follow prompts
-   ii. Connecting SDK to the terminal
-   A. Run: nano ~/.zshrc
-   B. Enter: export ANDROID_SDK=/Users/myuser/Library/Android/sdk
+Android Studio (emulator)
+   1. Download and install Android Studio
+   2. If using Mac, move to Apps folder
+   3. Set up Android Emulator
+   4. Follow install instructions EXCEPT "Select Components to Install:" select "Android Virtual Device"
+   5. Configure Android Studio
+   6. Project Option - More Actions - select "SDK Manager"
+   7. Follow prompts
+   8. Connecting SDK to the terminal
+   9. Run: nano ~/.zshrc
+   10. Enter: export ANDROID_SDK=/Users/myuser/Library/Android/sdk
    export PATH=$ANDROID_SDK/platform-tools:$PATH
    (be sure to change "myuser" to your path)
-   C. Press 'CTRL + O' to write the changes; 'Enter' to confirm the file name; 'CTRL + X' to exit nano
-   D. Apply changes by running: source ~/.zshrc
-   E. Verify it was configured by running: echo $ANDROID_SDK
-   F. To check path, run: echo $PATH
-   d. Setup Virtual Device Manager
-   i. Project Option - More Actions - select "Virtual Device Manager"
-   A. Choose any with a Google Play icon
-   B. Make sure system image uses same API number as in setup (should be recommended)
-   ii. To get Expo Go on virtual device, in Metro Bundler terminal, run: a
-   ii. Xcode for MacOS
-   A. Open by running: open -a Simulator
-   B. In Metro Bundler terminal, run: i
-   iii. Only have one simulator open at a time.
+   11. Press 'CTRL + O' to write the changes; 'Enter' to confirm the file name; 'CTRL + X' to exit nano
+   12. Apply changes by running: source ~/.zshrc
+   13. Verify it was configured by running: echo $ANDROID_SDK
+   14. To check path, run: echo $PATH
+   15. Setup Virtual Device Manager
+   16. Project Option - More Actions - select "Virtual Device Manager"
+   17. Choose any with a Google Play icon
+   18. Make sure system image uses same API number as in setup (should be recommended)
+   19. To get Expo Go on virtual device, in Metro Bundler terminal, run: a
+   20. Xcode for MacOS
+   21. Open by running: open -a Simulator
+   22. In Metro Bundler terminal, run: i
+   23. Only have one simulator open at a time.
 
-6. Gifted Chat
-   a. In project directory terminal, run: npm install react-native-gifted-chat --save
+Gifted Chat
+   1. In project directory terminal, run: npm install react-native-gifted-chat --save
 
-7. Firestore (via Firebase)
-   a. Create a new project in Google Firebase
-   i. Disable Google Analytics
-   ii. Build - Firestore Database
-   iii. Start in Production Mode
-   iv. Rules tab: change "allow read, write: if false;" to "allow read, write: if true;"
-   v. Enable the anonymous sign-in method (Build - Authentication - Get Started - SignInMethod - Anonymous)
-   vi. No need to actually create a collection
-   b. Install Firestore by running: npm install firebase@10.3.1 --save
-   c. Configure Firestore database to Chat
-   i. Project Settings - "</>" (Firestore for Web) - Register 11. Copy the const firebaseConifg... into App.js
-   d. Make sure to add firebase config code into .env file
-   e. Set up storage (Build - Storage - Get Started - Next - Done)
-   i. Rules tab: change "allow read, write: if false;" to "allow read, write: if true;" - Publish
+Firestore (via Firebase)
+   1. Create a new project in Google Firebase
+   2. Disable Google Analytics
+   3. Build - Firestore Database
+   4. Start in Production Mode
+   5. Rules tab: change "allow read, write: if false;" to "allow read, write: if true;"
+   6. Enable the anonymous sign-in method (Build - Authentication - Get Started - SignInMethod - Anonymous)
+   7. No need to actually create a collection
+   8. Install Firestore by running: npm install firebase@10.3.1 --save
+   9. Configure Firestore database to Chat
+   10. Project Settings - "</>" (Firestore for Web) - Register 11. Copy the const firebaseConifg... into App.js
+   11. Make sure to add firebase config code into .env file
+   12. Set up storage (Build - Storage - Get Started - Next - Done)
+   13. Rules tab: change "allow read, write: if false;" to "allow read, write: if true;" - Publish
 
-8. Local Storage (via React AsyncStorage)
-   a. Run: expo install @react-native-async-storage/async-storage
-   b. Then code accordingly
+Local Storage (via React AsyncStorage)
+   1. Run: expo install @react-native-async-storage/async-storage
+   2. Then code accordingly
 
-9. Detect Network Connection (via NetInfo)
-   a. Run: expo install @react-native-community/netinfo
-   b. Then code accordingly
+Detect Network Connection (via NetInfo)
+   1. Run: expo install @react-native-community/netinfo
+   2. Then code accordingly
 
-10. Testing in Offline Mode via Emulator
-    a. Run: expo start --offline
+Testing in Offline Mode via Emulator
+    1. Run: expo start --offline
 
-11. Media Library
-    a. Run: expo install expo-image-picker
-    b. To be able to save images taken in app, run: expo install expo-media-library
-    c. Then code accordingly
+Media Library
+    1. Run: expo install expo-image-picker
+    2. To be able to save images taken in app, run: expo install expo-media-library
+    3. Then code accordingly
 
-12. Geolocation
-    a. Run: expo install expo-location
-    b. Run: expo install react-native-maps
+Geolocation
+    1. Run: expo install expo-location
+    2. Run: expo install react-native-maps
 
-13. Clearing Cache
-    a. To delete .expo directory, run: rm -rf .expo
-    b. To clear npm cache, run: npm cache clean --force
-    c. To clear Metro bundler cache, run: expo start -c
-    d. To delete node_modules, run: rm -rf node_modules
-    i. Then, reinstall: npm install
+Clearing Cache
+    1. To delete .expo directory, run: rm -rf .expo
+    2. To clear npm cache, run: npm cache clean --force
+    3. To clear Metro bundler cache, run: expo start -c
+    4. To delete node_modules, run: rm -rf node_modules
+    5. Then, reinstall: npm install
 
-14. Expo Publish
-    a. Run: expo publish
+Expo Publish
+    1. Run: expo publish
 
-15. EAS Publishing if Expo CLI deprecated
-    a. Run: npm install -g eas-cli
-    b. Run: eas login
-    c. Run: eas update:configure
-    d. To build, run: eas build --platform all
-    e. To update, run: eas update
+EAS Publishing if Expo CLI deprecated
+    1. Run: npm install -g eas-cli
+    2. Run: eas login
+    3. Run: eas update:configure
+    4. To build, run: eas build --platform all
+    5. To update, run: eas update
 
 Github:
 To create new repo:
